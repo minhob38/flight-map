@@ -21,7 +21,6 @@ const Form = styled.form`
 
 const Input = styled.input`
   all: unset;
-  display: block;
   text-align: center;
   width: 300px;
   height: 3rem;

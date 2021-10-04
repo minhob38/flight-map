@@ -8,7 +8,6 @@ const SideBarContainer = styled.div`
   position: relative;
   width: 350px;
   height: 100%;
-  background-color: blue;
   z-index: 1;
 `;
 
