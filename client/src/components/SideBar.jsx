@@ -9,6 +9,7 @@ const SideBarContainer = styled.div`
   width: 350px;
   height: 100%;
   background-color: blue;
+  z-index: 1;
 `;
 
 export default function SideBar() {
