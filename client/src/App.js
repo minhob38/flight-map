@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import SideBar from "./components/SideBar";
 
 const AppContainer = styled.div`
   display: flex;
@@ -6,12 +7,6 @@ const AppContainer = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: red;
-`;
-
-const SideBar = styled.div`
-  width: 350px;
-  height: 100%;
-  background-color: blue;
 `;
 
 const Map = styled.div`
