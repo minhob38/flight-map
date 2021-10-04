@@ -1,40 +1,40 @@
 // ducks pattern: https://github.com/erikras/ducks-modular-redux
-import { delay, put, takeEvery, takeLatest } from "redux-saga/effects";
-// import { createAction, handleActions } from "redux-actions";
+import { delay, put, takeLatest } from "redux-saga/effects";
+import { createAction, handleActions } from "redux-actions";
+import produce from "immer";
 
 // actions types
-const LOGIN_CLICK = "LOGIN_CLICK";
-const LOGIN_CLICK_ASYNC = "LOGIN_CLICK_ASYNC";
+const LOGIN_CLICK = "auth/LOGIN_CLICK";
+const LOGIN_CLICK_ASYNC = "auth/LOGIN_CLICK_ASYNC";
 
 // action creators
-export const loginClick = () => ({ type: LOGIN_CLICK });
-export const loginClickAsync = () => ({ type: LOGIN_CLICK_ASYNC });
+export const loginClick = createAction(LOGIN_CLICK);
+export const loginClickAsync = createAction(LOGIN_CLICK_ASYNC);
+// ↑ export const loginClickAsync = () => ({ type: "auth/LOGIN_CLICK_ASYNC" });
 
 // sagas
-// const loginClickAsync = createAction(LOGIN_CLICK, (actionType) => actionType);
 function* loginClickSaga() {
-  console.log("1~");
-  yield delay(5000);
-  console.log("~5");
+  yield delay(1000);
   yield put(loginClick());
 }
 
 export function* authSaga() {
-  console.log("!!!");
   yield takeLatest(LOGIN_CLICK_ASYNC, loginClickSaga);
 }
 
-const initialState = false;
-
-const authReducer = (state = initialState, action) => {
-  console.log("auth reducer");
-  console.log(action);
-  switch (action.type) {
-    case LOGIN_CLICK:
-      return true;
-    default:
-      return state;
-  }
+const initialState = {
+  isLoginClicked: false,
 };
+
+const authReducer = handleActions(
+  {
+    [LOGIN_CLICK]: (state, action) => {
+      return produce(state, (dratf) => {
+        dratf.isLoginClicked = true;
+      });
+    },
+  },
+  initialState,
+);
 
 export default authReducer;
