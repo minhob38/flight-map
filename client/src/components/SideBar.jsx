@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import LoginButton from "./LoginButton";
@@ -11,9 +12,9 @@ const SideBarContainer = styled.div`
 `;
 
 export default function SideBar() {
-  const isLoginClicked = useSelector(state => {
-    return state.auth.isLoginClicked
-  })
+  const isLoginClicked = useSelector((state) => {
+    return state.auth.isLoginClicked;
+  });
 
   return (
     <SideBarContainer>

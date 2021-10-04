@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";;
+import styled from "styled-components";
 
 const LoginFormContainer = styled.div`
   display: flex;
@@ -9,58 +9,85 @@ const LoginFormContainer = styled.div`
   left: 370px;
   width: 350px;
   height: 100%;
-  padding-top: 20px;
-  background-color: orange;
+  background-color: white;
 `;
 
 const Form = styled.form`
   display: flex;
-
-`
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 50px;
+`;
 
 const Input = styled.input`
   all: unset;
   display: block;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
   text-align: center;
   width: 300px;
   height: 3rem;
-  background-color: white;
+  margin-bottom: 50px;
   font-size: 16px;
   border-bottom: 1px solid black;
+`;
+
+const SubmitButton = styled.button`
+  all: unset;
+  display: block;
+  text-align: center;
+  width: 300px;
+  height: 3rem;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: lightgray;
+  font-size: 16px;
+  &:hover {
+    background-color: gray;
+  }
 `;
 
 export default function LoginForm() {
   const handleChangeUserInput = (ev) => {
     const { name, value } = ev.target;
-    setUserInput({...userInput, [name]: value})
+    setUserInput({ ...userInput, [name]: value });
   };
 
-  const [userInput, setUserInput] = useState({
-    email: "",
-    password: "",
-  })
+  const [userInput, setUserInput] = useState({ email: "", password: "" });
 
   return (
     <LoginFormContainer>
-      <form>
+      <Form>
         <Input
-          name="email"
           type="text"
+          name="email"
+          value={userInput.email}
           placeholder="email을 입력하세요 : )"
           onChange={handleChangeUserInput}
-          value={userInput.email}
         />
         <Input
-          name="password"
           type="password"
+          name="password"
+          value={userInput.password}
           placeholder="비밀번호를 입력하세요 : )"
           onChange={handleChangeUserInput}
-          value={userInput.password}
         />
-      </form>
+        <SubmitButton
+          type="submit"
+          formMethod="post"
+          formAction="/api/auth/login"
+          // formTarget="_blank"
+        >
+          로그인
+        </SubmitButton>
+        <SubmitButton
+          type="submit"
+          formMethod="post"
+          formAction="/api/auth/signup"
+          // formTarget="_blank"
+          value="회원가입"
+        >
+          회원가입
+        </SubmitButton>
+      </Form>
     </LoginFormContainer>
   );
 }

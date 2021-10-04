@@ -7,13 +7,12 @@ const Button = styled.button`
   height: 100px;
 `;
 
-export default function LoginButton () {
-  const dispatch = useDispatch()
+export default function LoginButton() {
+  const dispatch = useDispatch();
 
   const onBtnClick = () => {
-    console.log("button click")
-    dispatch(actionCreators.loginClickAsync())
-  }
+    dispatch(actionCreators.loginClickAsync());
+  };
 
-  return <Button onClick={onBtnClick}>button</Button>
+  return <Button onClick={onBtnClick}>button</Button>;
 }
