@@ -54,7 +54,8 @@ export default function LoginForm() {
 
   const handleSignUpClick = async () => {
     const res = await fetch("/api/auth/signup/", {
-      method: "GET",
+      method: "POST",
+      body: JSON.stringify(userInput),
       headers: {
         "content-type": "application/json",
       },
