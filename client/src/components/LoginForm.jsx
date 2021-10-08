@@ -52,6 +52,17 @@ export default function LoginForm() {
 
   const [userInput, setUserInput] = useState({ email: "", password: "" });
 
+  const handleSignUpClick = async () => {
+    const res = await fetch("/api/auth/signup/", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+
+    const _res = await res.json();
+  };
+
   return (
     <LoginFormContainer>
       <Form>
@@ -69,21 +80,8 @@ export default function LoginForm() {
           placeholder="비밀번호를 입력하세요 : )"
           onChange={handleChangeUserInput}
         />
-        <SubmitButton
-          type="submit"
-          formMethod="post"
-          formAction="/api/auth/login"
-          // formTarget="_blank"
-        >
-          로그인
-        </SubmitButton>
-        <SubmitButton
-          type="submit"
-          formMethod="post"
-          formAction="/api/auth/signup"
-          // formTarget="_blank"
-          value="회원가입"
-        >
+        <SubmitButton>로그인</SubmitButton>
+        <SubmitButton type="button" value="회원가입" onClick={handleSignUpClick}>
           회원가입
         </SubmitButton>
       </Form>

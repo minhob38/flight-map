@@ -9,12 +9,6 @@ const AppContainer = styled.div`
   width: 100vw;
 `;
 
-// const Map = styled.div`
-//   flex: 1;
-//   height: 100%;
-//   background-color: tomato;
-// `;
-
 function App() {
   return (
     <AppContainer>
