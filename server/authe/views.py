@@ -24,5 +24,5 @@ def signup(request):
                 data = {"status": "success", "message": "user signed up"}
                 return HttpResponse(json.dumps(data), content_type="application/json")
     except Exception:
-        data = {"status": "success", "message": "internal server error"}
+        data = {"status": "error", "message": "internal server error"}
         return HttpResponseServerError(json.dumps(data), content_type="application/json")
