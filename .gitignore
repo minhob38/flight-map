@@ -4,3 +4,7 @@ node_modules
 
 __pycache__
 *.pyc
+*.log
+*.pot
+
+db.sqlite3

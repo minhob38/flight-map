@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import * as actionCreators from "../reducers/authReducer";
 
 const LoginFormContainer = styled.div`
   display: flex;
@@ -45,6 +47,8 @@ const SubmitButton = styled.button`
 `;
 
 export default function LoginForm() {
+  const dispatch = useDispatch();
+
   const handleChangeUserInput = (ev) => {
     const { name, value } = ev.target;
     setUserInput({ ...userInput, [name]: value });
@@ -52,16 +56,8 @@ export default function LoginForm() {
 
   const [userInput, setUserInput] = useState({ email: "", password: "" });
 
-  const handleSignUpClick = async () => {
-    const res = await fetch("/api/auth/signup/", {
-      method: "POST",
-      body: JSON.stringify(userInput),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-
-    const _res = await res.json();
+  const handleSignUpClick = () => {
+    dispatch(actionCreators.signupClickAsync(userInput));
   };
 
   return (
