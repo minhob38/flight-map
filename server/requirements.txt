@@ -1,6 +1,11 @@
 asgiref==3.4.1
+bcrypt==3.2.0
+cffi==1.14.6
 Django==3.2.7
+django-dotenv==1.4.2
 djangorestframework-jwt==1.11.0
+pycparser==2.20
 PyJWT==1.7.1
 pytz==2021.3
+six==1.16.0
 sqlparse==0.4.2
