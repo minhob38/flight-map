@@ -1,17 +1,22 @@
-from django.shortcuts import render
+import re
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
+import jwt
 from .models import User
 import json
 from django.utils import timezone
+import os
 
 @csrf_exempt
 def signup(request):
     try:
+        JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
+
         if request.method == "POST":
             body = json.loads(request.body)
             email = body["email"]
             password = body["password"]
+
 
             is_user = User.objects.filter(email=email).exists()
 
