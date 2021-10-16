@@ -6,7 +6,7 @@ import json
 import re
 
 @csrf_exempt
-def domestic_companies(request):
+def korea_companies(request):
     try:
         if request.method == "GET":
             data = []
@@ -42,7 +42,7 @@ def domestic_companies(request):
                     except (TypeError, AttributeError) as e: continue
             return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
         else:
-            HttpResponseNotFound()
+            return HttpResponseNotFound("not found")
     except Exception as e:
         data = {"status": "error", "message": str(e)}
         return HttpResponseServerError(json.dumps(data), content_type="application/json")
