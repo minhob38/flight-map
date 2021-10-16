@@ -28,7 +28,7 @@ const fetchServer = async (apiInfo) => {
 function* stockScrapingClickSaga(action) {
   yield call(fetchServer, {
     method: "GET",
-    uri: "/api/stock/domestic-companies/",
+    uri: "/api/stock/korea-companies/",
   });
 
   yield put(scrapingClick());
