@@ -1,4 +1,3 @@
-import re
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
 import jwt
@@ -11,7 +10,7 @@ import bcrypt
 @csrf_exempt
 def signup(request):
     try:
-
+        print("FFF")
         if request.method == "POST":
             body = json.loads(request.body)
             email = body["email"]
@@ -33,3 +32,12 @@ def signup(request):
     except Exception as e:
         data = {"status": "error", "message": str(e)}
         return HttpResponseServerError(json.dumps(data), content_type="application/json")
+
+# 임시 라우터 (file upload)
+@csrf_exempt
+def upload(request):
+    if request.method == "POST":
+        # body = json.loads(request.body)
+        print(request.body)
+
+    return HttpResponse("hello", content_type="text/plain")
