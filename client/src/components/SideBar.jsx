@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import LoginButton from "./LoginButton";
 import LoginForm from "./LoginForm";
+import ScrapingButton from "./ScrapingButton";
 
 const SideBarContainer = styled.div`
   position: relative;
@@ -20,6 +21,7 @@ export default function SideBar() {
     <SideBarContainer>
       <LoginButton />
       {isLoginClicked && <LoginForm />}
+      <ScrapingButton />
     </SideBarContainer>
   );
 }
