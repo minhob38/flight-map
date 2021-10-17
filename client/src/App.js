@@ -10,11 +10,6 @@ const AppContainer = styled.div`
   width: 100%;
 `;
 
-const Sample = styled.div`
-  width: 800px;
-  background-color: red;
-`;
-
 function App() {
   return (
     <AppContainer>
@@ -26,7 +21,6 @@ function App() {
         <input type="submit" />
       </form> */}
       <CompanyList />
-      {/* <Sample /> */}
     </AppContainer>
   );
 }

@@ -7,11 +7,11 @@ import ScrapingButton from "./ScrapingButton";
 
 const SideBarContainer = styled.div`
   position: relative;
-  background-color: lightgray;
+  flex-shrink: 0;
+  z-index: 1;
   width: 20rem;
   height: 100%;
-  z-index: 1;
-  flex-shrink: 0;
+  background-color: lightgray;
 `;
 
 export default function SideBar() {
