@@ -7,7 +7,8 @@ import ScrapingButton from "./ScrapingButton";
 
 const SideBarContainer = styled.div`
   position: relative;
-  width: 350px;
+  background-color: lightgray;
+  width: 20rem;
   height: 100%;
   z-index: 1;
 `;

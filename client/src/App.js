@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import SideBar from "./components/SideBar";
-import Map from "./components/Map";
+import CompanyList from "./components/CompanyList";
 
 const AppContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 `;
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <input name="hello" type="file" />
         <input type="submit" />
       </form> */}
+      <CompanyList />
     </AppContainer>
   );
 }

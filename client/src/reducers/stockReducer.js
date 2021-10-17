@@ -4,11 +4,11 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 
 // actions types
-const SCRAPING_CLICK = "stock/SIGNUP_CLICK";
+const SCRAPING_CLICK = "stock/SCRAPING_CLICK";
 const SCRAPING_CLICK_ASYNC = "stock/SCRAPING_CLICK_ASYNC";
 
 // action creators
-export const scrapingClick = createAction(SCRAPING_CLICK);
+export const scrapingClick = createAction(SCRAPING_CLICK, (coInfo) => coInfo);
 export const scrapingClickAsync = createAction(SCRAPING_CLICK_ASYNC);
 
 // sagas
@@ -22,29 +22,29 @@ const fetchServer = async (apiInfo) => {
     headers: { "content-type": "application/json" },
   });
 
-  await res.json();
+  return res.json();
 };
 
 function* stockScrapingClickSaga(action) {
-  yield call(fetchServer, {
+  const coInfo = yield call(fetchServer, {
     method: "GET",
     uri: "/api/stock/korea-companies/",
   });
 
-  yield put(scrapingClick());
+  yield put(scrapingClick(coInfo));
 }
 
 export function* stockSaga() {
   yield takeLatest(SCRAPING_CLICK_ASYNC, stockScrapingClickSaga);
 }
 
-const initialState = {};
+const initialState = { koreaKospiCoInfos: [] };
 
 const stockReducer = handleActions(
   {
     [SCRAPING_CLICK]: (state, action) => {
       return produce(state, (draft) => {
-        // draft.isLoginClicked = true;
+        draft.koreaKospiCoInfos = action.payload;
       });
     },
   },
