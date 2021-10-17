@@ -13,6 +13,8 @@ const Grid = styled.div`
   grid-auto-rows: minmax(5rem, 10rem);
   background-color: red;
   height: 100%;
+  justify-items: center;
+  align-items: center;
 `;
 
 export default function CompanyList() {
