@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import SideBar from "./components/SideBar";
 import CompanyList from "./components/CompanyList";
 
@@ -11,6 +12,10 @@ const AppContainer = styled.div`
 `;
 
 function App() {
+  const isKoreaKospiCompanyClicked = useSelector((state) => {
+    return state.stock.isKoreaKospiCompanyClicked;
+  });
+
   return (
     <AppContainer>
       <SideBar />
@@ -20,7 +25,7 @@ function App() {
         <input name="hello" type="file" />
         <input type="submit" />
       </form> */}
-      <CompanyList />
+      {isKoreaKospiCompanyClicked && <CompanyList />}
     </AppContainer>
   );
 }

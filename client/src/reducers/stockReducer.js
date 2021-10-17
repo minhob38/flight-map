@@ -4,12 +4,14 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 
 // actions types
+const KOREA_KOSPI_COMPANIES_CLICK = "stock/KOREA_KOSPI_COMPANIES_CLICK";
 const SCRAPING_CLICK = "stock/SCRAPING_CLICK";
-const SCRAPING_CLICK_ASYNC = "stock/SCRAPING_CLICK_ASYNC";
+const KOREA_KOSPI_COMPANIES_CLICK_ASYNC = "stock/KOREA_KOSPI_COMPANIES_CLICK_ASYNC";
 
 // action creators
+export const koreaKospiCompaniesClick = createAction(KOREA_KOSPI_COMPANIES_CLICK);
 export const scrapingClick = createAction(SCRAPING_CLICK, (coInfo) => coInfo);
-export const scrapingClickAsync = createAction(SCRAPING_CLICK_ASYNC);
+export const koreaKospiCompaniesClickAsync = createAction(KOREA_KOSPI_COMPANIES_CLICK_ASYNC);
 
 // sagas
 const fetchServer = async (apiInfo) => {
@@ -25,7 +27,9 @@ const fetchServer = async (apiInfo) => {
   return res.json();
 };
 
-function* stockScrapingClickSaga(action) {
+function* koreaKospiCompaniesClickSaga(action) {
+  yield put(koreaKospiCompaniesClick());
+
   const coInfo = yield call(fetchServer, {
     method: "GET",
     uri: "/api/stock/korea-companies/",
@@ -35,16 +39,25 @@ function* stockScrapingClickSaga(action) {
 }
 
 export function* stockSaga() {
-  yield takeLatest(SCRAPING_CLICK_ASYNC, stockScrapingClickSaga);
+  yield takeLatest(KOREA_KOSPI_COMPANIES_CLICK_ASYNC, koreaKospiCompaniesClickSaga);
 }
 
-const initialState = { koreaKospiCoInfos: [] };
+const initialState = {
+  koreaKospiCoInfos: [],
+  isKoreaKospiCompaniesClicked: false,
+};
 
 const stockReducer = handleActions(
   {
     [SCRAPING_CLICK]: (state, action) => {
       return produce(state, (draft) => {
         draft.koreaKospiCoInfos = action.payload;
+        draft.isClickedKoreanKospiInfo = action.payload;
+      });
+    },
+    [KOREA_KOSPI_COMPANIES_CLICK]: (state, action) => {
+      return produce(state, (draft) => {
+        draft.isKoreaKospiCompaniesClicked = true;
       });
     },
   },

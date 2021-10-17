@@ -20,7 +20,7 @@ export default function LoginButton() {
   const dispatch = useDispatch();
 
   const onBtnClick = () => {
-    dispatch(actionCreators.scrapingClickAsync());
+    dispatch(actionCreators.koreaKospiCompaniesClickAsync());
   };
 
   return <Button onClick={onBtnClick}>Coin Scraping</Button>;
