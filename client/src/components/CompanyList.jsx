@@ -1,20 +1,36 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
-const GridContainer = styled.div`
-  flex-shrink: 1;
-  min-width: 60rem;
+const CompanyListConatiner = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1
 `;
 
-const Grid = styled.div`
+const CompanyGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  grid-auto-rows: minmax(5rem, 10rem);
-  background-color: red;
-  height: 100%;
+  grid-template-columns: repeat(8, minmax(6rem, 1fr));
+  grid-auto-rows: 5rem;
   justify-items: center;
   align-items: center;
+  height: 100%;
+  overflow: scroll;
+  background-color: lightpink;
+`;
+
+const HeaderGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(8, minmax(6rem, 1fr));
+  grid-template-rows: 1fr;
+  justify-items: center;
+  align-items: center;
+  height: 5rem;
+`;
+
+const Div = styled.div`
 `;
 
 export default function CompanyList() {
@@ -22,34 +38,36 @@ export default function CompanyList() {
     return state.stock.koreaKospiCoInfos;
   });
 
-  const coInfos = koreaKospiCoInfos.map((coinfo, idx) => {
+  const coInfos = koreaKospiCoInfos.map((coinfo) => {
     return (
-      <>
-        <div>{coinfo?.["co_code"]}</div>
-        <div>{coinfo?.["co_name"]}</div>
-        <div>{coinfo?.["co_stock_price"]}</div>
-        <div>{coinfo?.["co_market_cap"]}</div>
-        <div>{coinfo?.["co_stock_num"]}</div>
-        <div>{coinfo?.["co_stock_vol"]}</div>
-        <div>{coinfo?.["co_per"]}</div>
-        <div>{coinfo?.["co_roe"]}</div>
-      </>
+      <Fragment key={uuidv4()}>
+        <Div>{coinfo?.["co_code"]}</Div>
+        <Div>{coinfo?.["co_name"]}</Div>
+        <Div>{coinfo?.["co_stock_price"]}</Div>
+        <Div>{coinfo?.["co_market_cap"]}</Div>
+        <Div>{coinfo?.["co_stock_num"]}</Div>
+        <Div>{coinfo?.["co_stock_vol"]}</Div>
+        <Div>{coinfo?.["co_per"]}</Div>
+        <Div>{coinfo?.["co_roe"]}</Div>
+      </Fragment>
     );
   });
 
   return (
-    <GridContainer>
-      <Grid>
+    <CompanyListConatiner>
+      <HeaderGrid>
+        <Div>기업코드</Div>
+        <Div>기업이름</Div>
+        <Div>현재주가</Div>
+        <Div>시가총액</Div>
+        <Div>주식수</Div>
+        <Div>거래량</Div>
+        <Div>PER</Div>
+        <Div>ROE</Div>
+      </HeaderGrid>
+      <CompanyGrid>
         {coInfos}
-        {/* <div>{koreaKospiCoInfos[0]?.co_name}</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>7</div>
-        <div>8</div> */}
-      </Grid>
-    </GridContainer>
+      </CompanyGrid>
+    </CompanyListConatiner>
   );
 }
