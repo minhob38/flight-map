@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 const GridContainer = styled.div`
-  max-width: 50rem;
+  flex-shrink: 1;
+  min-width: 60rem;
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, minmax(5rem, 1fr));
+  grid-template-columns: repeat(8, minmax(0, 1fr));
   grid-auto-rows: minmax(5rem, 10rem);
   background-color: red;
   height: 100%;

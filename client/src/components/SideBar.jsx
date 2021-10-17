@@ -11,6 +11,7 @@ const SideBarContainer = styled.div`
   width: 20rem;
   height: 100%;
   z-index: 1;
+  flex-shrink: 0;
 `;
 
 export default function SideBar() {
