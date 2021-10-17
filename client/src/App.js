@@ -12,8 +12,8 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-  const isKoreaKospiCompanyClicked = useSelector((state) => {
-    return state.stock.isKoreaKospiCompanyClicked;
+  const isKoreaKospiClicked = useSelector((state) => {
+    return state.stock.isKoreaKospiClicked;
   });
 
   return (
@@ -25,7 +25,7 @@ function App() {
         <input name="hello" type="file" />
         <input type="submit" />
       </form> */}
-      {isKoreaKospiCompanyClicked && <CompanyList />}
+      {isKoreaKospiClicked && <CompanyList />}
     </AppContainer>
   );
 }

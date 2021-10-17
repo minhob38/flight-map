@@ -4,14 +4,14 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 
 // actions types
-const KOREA_KOSPI_COMPANIES_CLICK = "stock/KOREA_KOSPI_COMPANIES_CLICK";
+const KOREA_KOSPI_CLICK = "stock/KOREA_KOSPI_CLICK";
 const SCRAPING_CLICK = "stock/SCRAPING_CLICK";
-const KOREA_KOSPI_COMPANIES_CLICK_ASYNC = "stock/KOREA_KOSPI_COMPANIES_CLICK_ASYNC";
+const KOREA_KOSPI_CLICK_ASYNC = "stock/KOREA_KOSPI_CLICK_ASYNC";
 
 // action creators
-export const koreaKospiCompaniesClick = createAction(KOREA_KOSPI_COMPANIES_CLICK);
+export const koreaKospiClick = createAction(KOREA_KOSPI_CLICK);
 export const scrapingClick = createAction(SCRAPING_CLICK, (coInfo) => coInfo);
-export const koreaKospiCompaniesClickAsync = createAction(KOREA_KOSPI_COMPANIES_CLICK_ASYNC);
+export const koreaKospiClickAsync = createAction(KOREA_KOSPI_CLICK_ASYNC);
 
 // sagas
 const fetchServer = async (apiInfo) => {
@@ -27,8 +27,8 @@ const fetchServer = async (apiInfo) => {
   return res.json();
 };
 
-function* koreaKospiCompaniesClickSaga(action) {
-  yield put(koreaKospiCompaniesClick());
+function* koreaKospiClickSaga(action) {
+  yield put(koreaKospiClick());
 
   const coInfo = yield call(fetchServer, {
     method: "GET",
@@ -39,12 +39,12 @@ function* koreaKospiCompaniesClickSaga(action) {
 }
 
 export function* stockSaga() {
-  yield takeLatest(KOREA_KOSPI_COMPANIES_CLICK_ASYNC, koreaKospiCompaniesClickSaga);
+  yield takeLatest(KOREA_KOSPI_CLICK_ASYNC, koreaKospiClickSaga);
 }
 
 const initialState = {
   koreaKospiCoInfos: [],
-  isKoreaKospiCompaniesClicked: false,
+  isKoreaKospiClicked: false,
 };
 
 const stockReducer = handleActions(
@@ -52,12 +52,12 @@ const stockReducer = handleActions(
     [SCRAPING_CLICK]: (state, action) => {
       return produce(state, (draft) => {
         draft.koreaKospiCoInfos = action.payload;
-        draft.isClickedKoreanKospiInfo = action.payload;
+        draft.isClickedKoreaKospi = action.payload;
       });
     },
-    [KOREA_KOSPI_COMPANIES_CLICK]: (state, action) => {
+    [KOREA_KOSPI_CLICK]: (state, action) => {
       return produce(state, (draft) => {
-        draft.isKoreaKospiCompaniesClicked = true;
+        draft.isKoreaKospiClicked = true;
       });
     },
   },
