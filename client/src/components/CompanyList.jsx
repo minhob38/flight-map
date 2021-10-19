@@ -18,7 +18,6 @@ const CompanyGrid = styled.div`
   align-items: center;
   height: 100%;
   overflow: scroll;
-  background-color: lightpink;
 `;
 
 const HeaderGrid = styled.div`
@@ -28,6 +27,9 @@ const HeaderGrid = styled.div`
   justify-items: center;
   align-items: center;
   height: 5rem;
+  background-color: #CFE0E8;
+  font-weight: 900;
+  color: #46565F;
 `;
 
 const Div = styled.div`

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import LoginButton from "./LoginButton";
 import LoginForm from "./LoginForm";
-import ScrapingButton from "./ScrapingButton";
+import KoreaKospiBtn from "./KoreaKospiBtn";
 
 const SideBarContainer = styled.div`
   position: relative;
@@ -11,7 +11,8 @@ const SideBarContainer = styled.div`
   z-index: 1;
   width: 20rem;
   height: 100%;
-  background-color: lightgray;
+  /* background-color: #46565F; */
+  background-color: #92A5B4;
 `;
 
 export default function SideBar() {
@@ -23,7 +24,7 @@ export default function SideBar() {
     <SideBarContainer>
       <LoginButton />
       {isLoginClicked && <LoginForm />}
-      <ScrapingButton />
+      <KoreaKospiBtn />
     </SideBarContainer>
   );
 }

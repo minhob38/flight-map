@@ -49,6 +49,7 @@ export function* stockSaga() {
 const initialState = {
   koreaKospiCoInfos: [],
   isKoreaKospiClicked: false,
+  isLoadingKoreaKospi: false,
 };
 
 const stockReducer = handleActions(
