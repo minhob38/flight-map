@@ -20,6 +20,7 @@ const Button = styled.button`
     border: none;
     color: #D0DFE8;
   }
+  cursor: pointer;
 `;
 
 export default function KoreaKospiBtn() {

@@ -1,7 +1,9 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+import * as actionCreators from "../reducers/stockReducer";
+import ToolTip from "./ToolTip";
 
 const CompanyListConatiner = styled.div`
   display: flex;
@@ -11,13 +13,22 @@ const CompanyListConatiner = styled.div`
 `;
 
 const CompanyGrid = styled.div`
+  flex: 1;
+  overflow: scroll;
+`;
+
+const CompanyItemGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(8, minmax(6rem, 1fr));
-  grid-auto-rows: 5rem;
+  grid-template-rows: 5rem;
   justify-items: center;
   align-items: center;
-  height: 100%;
-  overflow: scroll;
+  &:hover {
+    background-color: #46565F;
+    border: none;
+    color: #D0DFE8;
+  }
+  cursor: pointer;
 `;
 
 const HeaderGrid = styled.div`
@@ -36,13 +47,22 @@ const Div = styled.div`
 `;
 
 export default function CompanyList() {
+  const dispatch = useDispatch();
+
   const koreaKospiCoInfos = useSelector((state) => {
     return state.stock.koreaKospiCoInfos;
   });
 
+  const handleCompanyClick = (ev) => {
+    dispatch(actionCreators.companyItemClick({
+      clickedX: ev.clientX,
+      clickedY: ev.clientY,
+    }));
+  };
+
   const coInfos = koreaKospiCoInfos.map((coinfo) => {
     return (
-      <Fragment key={uuidv4()}>
+      <CompanyItemGrid key={uuidv4()} onClick={handleCompanyClick}>
         <Div>{coinfo?.["co_code"]}</Div>
         <Div>{coinfo?.["co_name"]}</Div>
         <Div>{coinfo?.["co_stock_price"]}</Div>
@@ -51,7 +71,7 @@ export default function CompanyList() {
         <Div>{coinfo?.["co_stock_vol"]}</Div>
         <Div>{coinfo?.["co_per"]}</Div>
         <Div>{coinfo?.["co_roe"]}</Div>
-      </Fragment>
+      </CompanyItemGrid>
     );
   });
 
@@ -67,9 +87,12 @@ export default function CompanyList() {
         <Div>PER</Div>
         <Div>ROE</Div>
       </HeaderGrid>
+      {/* <CompanyGrid onClick={setIsCompanyClicked(isCompanyClicked)}> */}
       <CompanyGrid>
         {coInfos}
       </CompanyGrid>
+      <ToolTip />
+      {/* <ToolTip position={clickedPosition} isComapnyClicked={isCompanyClicked} /> */}
     </CompanyListConatiner>
   );
 }
