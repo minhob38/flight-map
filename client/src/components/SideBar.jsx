@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import LoginButton from "./LoginButton";
 import LoginForm from "./LoginForm";
 import KoreaKospiBtn from "./KoreaKospiBtn";
+import * as colors from "../constants/colors";
 
 const SideBarContainer = styled.div`
   position: relative;
@@ -11,8 +12,7 @@ const SideBarContainer = styled.div`
   z-index: 1;
   width: 20rem;
   height: 100%;
-  /* background-color: #46565F; */
-  background-color: #92A5B4;
+  background-color: ${colors.SECONDAY_GRAY};
 `;
 
 export default function SideBar() {
