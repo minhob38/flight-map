@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import SideBar from "./components/SideBar";
 import CompanyList from "./components/CompanyList";
 import LoadingModal from "./components/LoadingModal";
+import Modal from "./components/Modal";
 
 const AppContainer = styled.div`
   position: relative;
@@ -12,16 +13,16 @@ const AppContainer = styled.div`
   width: 100%;
 `;
 
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
-  background-color: red;
-  opacity: 0.5;
-`;
+// const Modal = styled.div`
+//   position: fixed;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   z-index: 10;
+//   background-color: red;
+//   opacity: 0.5;
+// `;
 
 function App() {
   const isKoreaKospiClicked = useSelector((state) => {
@@ -41,7 +42,11 @@ function App() {
         <input name="hello" type="file" />
         <input type="submit" />
       </form> */}
-      {isLoadingKoreaKospi && <LoadingModal />}
+      {isLoadingKoreaKospi && (
+        <Modal>
+          <LoadingModal />
+        </Modal>
+      )}
       {isKoreaKospiClicked && <CompanyList />}
     </AppContainer>
   );

@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import * as actionCreators from "../reducers/stockReducer";
+import { modalOn } from "../reducers/appReducer";
 import ToolTip from "./ToolTip";
+import Modal from "./Modal";
 import * as colors from "../constants/colors";
 
 const CompanyListConatiner = styled.div`
@@ -59,15 +61,15 @@ export default function CompanyList() {
     return state.stock.koreaKospiCoInfos;
   });
 
+  const isModalVisible = useSelector((state) => {
+    return state.app.isModalVisible;
+  });
+
   const [clickedCoCode, setClickedCoCode] = useState("");
 
   const handleCompanyClick = (ev) => {
     setClickedCoCode(ev.currentTarget.dataset.companyCode);
-
-    dispatch(actionCreators.companyItemClick({
-      clickedX: ev.clientX,
-      clickedY: ev.clientY,
-    }));
+    dispatch(modalOn());
   };
 
   const coInfos = koreaKospiCoInfos.map((coinfo) => {
@@ -91,23 +93,28 @@ export default function CompanyList() {
   });
 
   return (
-    <CompanyListConatiner>
-      <HeaderGrid>
-        <Div>기업코드</Div>
-        <Div>기업이름</Div>
-        <Div>현재주가</Div>
-        <Div>시가총액</Div>
-        <Div>주식수</Div>
-        <Div>거래량</Div>
-        <Div>PER</Div>
-        <Div>ROE</Div>
-      </HeaderGrid>
-      {/* <CompanyGrid onClick={setIsCompanyClicked(isCompanyClicked)}> */}
-      <CompanyGrid>
-        {coInfos}
-      </CompanyGrid>
-      <ToolTip />
-      {/* <ToolTip position={clickedPosition} isComapnyClicked={isCompanyClicked} /> */}
-    </CompanyListConatiner>
+    <>
+      <CompanyListConatiner>
+        <HeaderGrid>
+          <Div>기업코드</Div>
+          <Div>기업이름</Div>
+          <Div>현재주가</Div>
+          <Div>시가총액</Div>
+          <Div>주식수</Div>
+          <Div>거래량</Div>
+          <Div>PER</Div>
+          <Div>ROE</Div>
+        </HeaderGrid>
+        <CompanyGrid>
+          {coInfos}
+        </CompanyGrid>
+        {/* <ToolTip /> */}
+      </CompanyListConatiner>
+      {isModalVisible && (
+        <Modal>
+          <ToolTip />
+        </Modal>
+      )}
+    </>
   );
 }

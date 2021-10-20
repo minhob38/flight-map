@@ -35,8 +35,6 @@ const Loading = styled.div`
 }
 `;
 
-
-
 function LoadingModal() {
   return (
     <Modal>
