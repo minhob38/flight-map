@@ -2,6 +2,7 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
+import fetchServer from "../utils/fetchServer";
 
 // actions types
 const LOGIN_CLICK = "auth/LOGIN_CLICK";
@@ -23,20 +24,6 @@ function* loginClickSaga() {
   yield delay(1000);
   yield put(loginClick());
 }
-
-const fetchServer = async (apiInfo) => {
-  const { method, uri, data } = apiInfo;
-
-  const res = await fetch(uri, {
-    method,
-    body: JSON.stringify(data),
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-
-  await res.json();
-};
 
 function* signupClickSaga(action) {
   yield call(fetchServer, {
