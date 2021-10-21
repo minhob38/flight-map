@@ -12,3 +12,4 @@ const fetchServer = async (apiInfo) => {
 };
 
 export default fetchServer;
+//test
