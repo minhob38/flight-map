@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import * as actionCreators from "../reducers/stockReducer";
-import { modalOn } from "../reducers/appReducer";
+import * as stockAction from "../reducers/stockReducer";
+import * as appAction from "../reducers/appReducer";
 import ToolTip from "./ToolTip";
 import Modal from "./Modal";
 import * as colors from "../constants/colors";
@@ -65,11 +65,13 @@ export default function CompanyList() {
     return state.app.isModalVisible;
   });
 
-  const [clickedCoCode, setClickedCoCode] = useState("");
+  const clickedCompanyCode = useSelector((state) => {
+    return state.stock.clickedCompanyCode;
+  });
 
   const handleCompanyClick = (ev) => {
-    setClickedCoCode(ev.currentTarget.dataset.companyCode);
-    dispatch(modalOn());
+    dispatch(stockAction.koreaCompanyClick(ev.currentTarget.dataset.companyCode));
+    dispatch(appAction.modalOn());
   };
 
   const coInfos = koreaKospiCoInfos.map((coinfo) => {
@@ -78,7 +80,7 @@ export default function CompanyList() {
         key={uuidv4()}
         data-company-code={coinfo?.["co_code"]}
         onClick={handleCompanyClick}
-        clickedCoCode={clickedCoCode}
+        clickedCoCode={clickedCompanyCode}
       >
         <Div>{coinfo?.["co_code"]}</Div>
         <Div>{coinfo?.["co_name"]}</Div>

@@ -9,12 +9,15 @@ const KOREA_KOSPI_CLICK = "stock/KOREA_KOSPI_CLICK";
 const IS_LOADING_KOREA_KOSPI = "stock/IS_LOADING_KOREA_KOSPI";
 const SCRAPING_CLICK = "stock/SCRAPING_CLICK";
 const KOREA_KOSPI_CLICK_ASYNC = "stock/KOREA_KOSPI_CLICK_ASYNC";
+const KOREA_COMPANY_CLICK = "stock/KOREA_COMPANY_CLICK";
 
 // action creators
+export const koreaKospiClickAsync = createAction(KOREA_KOSPI_CLICK_ASYNC, (status) => status);
 export const koreaKospiClick = createAction(KOREA_KOSPI_CLICK);
 export const isLoadingKoreaKospi = createAction(IS_LOADING_KOREA_KOSPI);
 export const scrapingClick = createAction(SCRAPING_CLICK, (coInfo) => coInfo);
-export const koreaKospiClickAsync = createAction(KOREA_KOSPI_CLICK_ASYNC, (status) => status);
+
+export const koreaCompanyClick = createAction(KOREA_COMPANY_CLICK, (status) => status);
 
 // sagas
 function* koreaKospiClickSaga(action) {
@@ -36,8 +39,8 @@ export function* stockSaga() {
 
 const initialState = {
   koreaKospiCoInfos: [],
-  isKoreaKospiClicked: false,
   isLoadingKoreaKospi: false,
+  clickedCompanyCode: "",
 };
 
 const stockReducer = handleActions(
@@ -45,17 +48,16 @@ const stockReducer = handleActions(
     [SCRAPING_CLICK]: (state, action) => {
       return produce(state, (draft) => {
         draft.koreaKospiCoInfos = action.payload;
-        draft.isClickedKoreaKospi = action.payload;
-      });
-    },
-    [KOREA_KOSPI_CLICK]: (state, action) => {
-      return produce(state, (draft) => {
-        draft.isKoreaKospiClicked = true;
       });
     },
     [IS_LOADING_KOREA_KOSPI]: (state, action) => {
       return produce(state, (draft) => {
         draft.isLoadingKoreaKospi = action.payload;
+      });
+    },
+    [KOREA_COMPANY_CLICK]: (state, action) => {
+      return produce(state, (draft) => {
+        draft.clickedCompanyCode = action.payload;
       });
     },
   },

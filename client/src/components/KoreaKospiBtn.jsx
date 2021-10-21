@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import * as actionCreators from "../reducers/stockReducer";
 
-const Button = styled.button`
+const SLink = styled(Link)`
   all: unset;
   display: flex;
   justify-content: center;
@@ -26,9 +27,13 @@ const Button = styled.button`
 export default function KoreaKospiBtn() {
   const dispatch = useDispatch();
 
-  const onBtnClick = () => {
+  const onLinkClick = () => {
     dispatch(actionCreators.koreaKospiClickAsync());
   };
 
-  return <Button onClick={onBtnClick}>한국 KOSPI 종목</Button>;
+  return (
+    <SLink to="/korea/kospi/companies" onClick={onLinkClick}>
+      한국 KOSPI 종목
+    </SLink>
+  );
 }

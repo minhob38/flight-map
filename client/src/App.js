@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { Route } from "react-router-dom";
+
 import SideBar from "./components/SideBar";
 import CompanyList from "./components/CompanyList";
 import LoadingModal from "./components/LoadingModal";
@@ -25,10 +27,6 @@ const AppContainer = styled.div`
 // `;
 
 function App() {
-  const isKoreaKospiClicked = useSelector((state) => {
-    return state.stock.isKoreaKospiClicked;
-  });
-
   const isLoadingKoreaKospi = useSelector((state) => {
     return state.stock.isLoadingKoreaKospi;
   });
@@ -47,7 +45,9 @@ function App() {
           <LoadingModal />
         </Modal>
       )}
-      {isKoreaKospiClicked && <CompanyList />}
+      <Route path="/korea/kospi/companies">
+        <CompanyList />
+      </Route>
     </AppContainer>
   );
 }
