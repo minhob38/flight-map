@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
+import * as stockAction from "../reducers/stockReducer";
 import * as colors from "../constants/colors";
 
 const ToolTipContainer = styled.div`
@@ -42,13 +43,22 @@ const SLink = styled(Link)`
 `;
 
 function ToolTip() {
+  const dispatch = useDispatch();
+
   const clickedCompanyCode = useSelector((state) => {
     return state.stock.clickedCompanyCode;
   });
 
+  const handleLinkClick = () => {
+    dispatch(stockAction.fundamentalAnalysisClickAsync(clickedCompanyCode));
+  };
+
   return (
     <ToolTipContainer>
-      <SLink to={`/fundamental-analysis/companies/${clickedCompanyCode}`}>
+      <SLink
+        to={`/fundamental-analysis/companies/${clickedCompanyCode}`}
+        onClick={handleLinkClick}
+      >
         <IoSearch size={"1.3rem"} color={colors.TERNARY_GRAY} />
         기본적 분석 보기
       </SLink>

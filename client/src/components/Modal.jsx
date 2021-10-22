@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import * as actionCreators from "../reducers/appReducer";
@@ -21,7 +21,7 @@ export default function Modal({ children }) {
 
   const handleClickModal = (ev) => {
     if (ev.currentTarget === ev.target) {
-      dispatch(actionCreators.modalOff());
+      dispatch(actionCreators.disableModal());
     }
   };
 

@@ -4,29 +4,47 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 
 // actions types
-const MODAL_ON = "app/MODAL_ON";
-const MODAL_OFF = "app/MODAL_OFF";
+const ENABLE_LOADING = "app/ENABLE_LOADING";
+const DISABLE_LOADING = "app/DISABLE_LOADING";
+// const MODAL_ON = "app/MODAL_ON";
+// const MODAL_OFF = "app/MODAL_OFF";
+const ENABLE_MODAL = "app/ENABLE_MODAL";
+const DISABLE_MODAL = "app/DISABLE_MODAL";
 
 // action creators
-export const modalOn = createAction(MODAL_ON);
-export const modalOff = createAction(MODAL_OFF);
+export const enableLoading = createAction(ENABLE_LOADING);
+export const disableLoading = createAction(DISABLE_LOADING);
+
+export const enableModal = createAction(ENABLE_MODAL);
+export const disableModal = createAction(DISABLE_MODAL);
 
 export function* appSaga() {
   //
 }
 
 const initialState = {
+  isLoading: false,
   isModalVisible: false,
 };
 
 const appReducer = handleActions(
   {
-    [MODAL_ON]: (state, action) => {
+    [ENABLE_LOADING]: (state, action) => {
+      return produce(state, (draft) => {
+        draft.isLoading = true;
+      });
+    },
+    [DISABLE_LOADING]: (state, action) => {
+      return produce(state, (draft) => {
+        draft.isLoading = false;
+      });
+    },
+    [ENABLE_MODAL]: (state, action) => {
       return produce(state, (draft) => {
         draft.isModalVisible = true;
       });
     },
-    [MODAL_OFF]: (state, action) => {
+    [DISABLE_MODAL]: (state, action) => {
       return produce(state, (draft) => {
         draft.isModalVisible = false;
       });

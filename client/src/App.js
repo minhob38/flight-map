@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 
 import SideBar from "./components/SideBar";
 import CompanyList from "./components/CompanyList";
+import FundAnalysis from "./components/FundAnalysis";
 import LoadingModal from "./components/LoadingModal";
 import Modal from "./components/Modal";
 
@@ -27,8 +28,8 @@ const AppContainer = styled.div`
 // `;
 
 function App() {
-  const isLoadingKoreaKospi = useSelector((state) => {
-    return state.stock.isLoadingKoreaKospi;
+  const isLoading = useSelector((state) => {
+    return state.app.isLoading;
   });
 
   return (
@@ -40,13 +41,16 @@ function App() {
         <input name="hello" type="file" />
         <input type="submit" />
       </form> */}
-      {isLoadingKoreaKospi && (
+      {isLoading && (
         <Modal>
           <LoadingModal />
         </Modal>
       )}
       <Route path="/korea/kospi/companies">
         <CompanyList />
+      </Route>
+      <Route path="/fundamental-analysis/companies">
+        <FundAnalysis />
       </Route>
     </AppContainer>
   );

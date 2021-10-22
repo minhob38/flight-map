@@ -46,6 +46,7 @@
     "no-mixed-operators": "off",
     "no-param-reassign": "off",
     "import/no-extraneous-dependencies": "off",
+    "guard-for-in": "off",
     "react/jsx-indent": ["warn", 2],
     "react/style-prop-object": "warn",
     "react/prop-types": "warn",

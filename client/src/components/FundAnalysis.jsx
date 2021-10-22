@@ -15,15 +15,21 @@ const CompanyListConatiner = styled.div`
   flex: 1;
 `;
 
-const CompanyGrid = styled.div`
+const CompanyGridContainer = styled.div`
   flex: 1;
   overflow: scroll;
 `;
 
-const CompanyItemGrid = styled.div`
+// const CompanyGrid = styled.div`
+//   flex: 1;
+//   overflow: scroll;
+// `;
+
+const CompanyGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, minmax(6rem, 1fr));
-  grid-template-rows: 5rem;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(6, minmax(6rem, 1fr));
+  grid-template-rows: repeat(54, minmax(5rem, 1fr));
   justify-items: center;
   align-items: center;
   background-color: ${(props) => {
@@ -41,14 +47,14 @@ const CompanyItemGrid = styled.div`
 
 const HeaderGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, minmax(6rem, 1fr));
-  grid-template-rows: 1fr;
+  grid-template-columns: repeat(6, minmax(6rem, 1fr));
+  grid-template-rows: repeat(54, minmax(6rem, 1fr));
   justify-items: center;
   align-items: center;
   height: 5rem;
   background-color: ${colors.TERNARY_GRAY};
   font-weight: 900;
-  color: #46565F;
+  color: ${colors.PRIMARY_GRAY};
 `;
 
 const Div = styled.div`
@@ -57,10 +63,9 @@ const Div = styled.div`
 export default function CompanyList() {
   const dispatch = useDispatch();
 
-  const koreaKospiCoInfos = useSelector((state) => {
-    return state.stock.koreaKospiCoInfos;
+  const fundamentalAnalysis = useSelector((state) => {
+    return state.stock.fundamentalAnalysis;
   });
-
   const isModalVisible = useSelector((state) => {
     return state.app.isModalVisible;
   });
@@ -74,23 +79,16 @@ export default function CompanyList() {
     dispatch(appAction.enableModal());
   };
 
-  const coInfos = koreaKospiCoInfos.map((coinfo) => {
+  const coInfos = fundamentalAnalysis["item"]?.map((coinfo) => {
     return (
-      <CompanyItemGrid
-        key={uuidv4()}
-        data-company-code={coinfo?.["co_code"]}
-        onClick={handleCompanyClick}
-        clickedCoCode={clickedCompanyCode}
-      >
-        <Div>{coinfo?.["co_code"]}</Div>
-        <Div>{coinfo?.["co_name"]}</Div>
-        <Div>{coinfo?.["co_stock_price"]}</Div>
-        <Div>{coinfo?.["co_market_cap"]}</Div>
-        <Div>{coinfo?.["co_stock_num"]}</Div>
-        <Div>{coinfo?.["co_stock_vol"]}</Div>
-        <Div>{coinfo?.["co_per"]}</Div>
-        <Div>{coinfo?.["co_roe"]}</Div>
-      </CompanyItemGrid>
+      // <CompanyGrid
+      //   key={uuidv4()}
+      //   data-company-code={coinfo?.["co_code"]}
+      //   onClick={handleCompanyClick}
+      //   clickedCoCode={clickedCompanyCode}
+      // >
+        <Div>{coinfo}</Div>
+      // </CompanyGrid>
     );
   });
 
@@ -98,18 +96,23 @@ export default function CompanyList() {
     <>
       <CompanyListConatiner>
         <HeaderGrid>
-          <Div>기업코드</Div>
-          <Div>기업이름</Div>
-          <Div>현재주가</Div>
-          <Div>시가총액</Div>
-          <Div>주식수</Div>
-          <Div>거래량</Div>
-          <Div>PER</Div>
-          <Div>ROE</Div>
+          <Div>N/A</Div>
+          <Div>2019.12.31</Div>
+          <Div>2019.12.31</Div>
+          <Div>2019.12.31</Div>
+          <Div>2019.12.31</Div>
+          <Div>2020.12.31</Div>
         </HeaderGrid>
-        <CompanyGrid>
-          {coInfos}
-        </CompanyGrid>
+        <CompanyGridContainer>
+          <CompanyGrid>
+            {coInfos}
+            {coInfos}
+            {coInfos}
+            {coInfos}
+            {coInfos}
+            {coInfos}
+          </CompanyGrid>
+        </CompanyGridContainer>
         {/* <ToolTip /> */}
       </CompanyListConatiner>
       {isModalVisible && (
