@@ -1,4 +1,8 @@
 from django.urls import path
-from . import views
+from stock.views import korea_companies, FundamentalAnalysis
 
-urlpatterns = [path("korea-companies/", views.korea_companies)]
+urlpatterns = [
+    path("korea-companies/", korea_companies),
+    path("korea/companies/<company_code>/fundamental-analysis/", FundamentalAnalysis.as_view())
+]
+

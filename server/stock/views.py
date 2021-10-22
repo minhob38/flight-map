@@ -1,9 +1,15 @@
+from dart_fss import corp
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
 from bs4 import BeautifulSoup
+import os
 import requests
 import json
 import re
+import datetime
+import dart_fss as dart
+from django.views import View
+from .helpers.get_financial_statements import get_balance_sheet
 
 @csrf_exempt
 def korea_companies(request):
@@ -47,3 +53,26 @@ def korea_companies(request):
         data = {"status": "error", "message": str(e)}
         return HttpResponseServerError(json.dumps(data), content_type="application/json")
 
+class FundamentalAnalysis(View):
+    @csrf_exempt
+    def get(self, request, **kwargs):
+        try:
+            DART_API_KEY = os.environ.get("DART_API_KEY")
+            dart.set_api_key(api_key=DART_API_KEY)
+
+            current_year = datetime.datetime.now().year
+            company_code = kwargs["company_code"]
+            fs = dart.fs.extract(corp_code=company_code, bgn_de=f'{current_year}0101')
+
+            df_is = fs["is"] # 연결손익계산서(Income Statement)
+            df_cis = fs["cis"] # 연결포괄손익서(Comprehensive Income Statement)
+            df_cf = fs["cf"] # 현금흐름표(Cash Flow Statement)
+
+            df_bs = get_balance_sheet(fs)
+
+            data= df_bs.to_json(orient='columns')
+            return HttpResponse(data, content_type="application/json")
+        except Exception as e:
+            print(e)
+            data = {"status": "error", "message": str(e)}
+            return HttpResponseServerError(json.dumps(data), content_type="application/json")

@@ -10,7 +10,6 @@ import bcrypt
 @csrf_exempt
 def signup(request):
     try:
-        print("FFF")
         if request.method == "POST":
             body = json.loads(request.body)
             email = body["email"]
