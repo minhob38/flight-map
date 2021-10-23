@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import * as colors from "../constants/colors";
-
+import generateFinancialStatementTableItem from "./helpers/generateFinancialStatementTableItem";
+console.log(generateFinancialStatementTableItem)
 const FundAnalysisConatiner = styled.div`
   display: flex;
   flex-direction: column;
@@ -72,34 +73,13 @@ const Div = styled.div`
 `;
 
 export default function FundAnalysis() {
+  const ITEM_LIST = ["유동자산", "재고자산", "비유동자산", "매출채권및기타채권"];
   const fundamentalAnalysis = useSelector((state) => {
     return state.stock.fundamentalAnalysis;
   });
 
-  const items = fundamentalAnalysis["item"]?.map((item) => {
-    return <Div key={uuidv4()}>{item}</Div>;
-  });
-
-  let numbers = [];
-  let dates = [];
-
-  const columns = Object.keys(fundamentalAnalysis).length - 1;
-  const rows = fundamentalAnalysis["item"].length;
-
-  for (const key in fundamentalAnalysis) {
-    if (/\d{8}/.test(key)) {
-      const number = fundamentalAnalysis[key]?.map((item) => {
-        return <Div key={uuidv4()}>{item}</Div>;
-      });
-
-      numbers = [...numbers, number];
-      dates = [...dates, key];
-    }
-  }
-
-  const _dates = dates.map((date) => {
-    return <Div key={uuidv4()}>{date}</Div>;
-  });
+  const { dates, items, numbers, columns, rows }
+    = generateFinancialStatementTableItem(fundamentalAnalysis);
 
   return (
     <>
@@ -109,7 +89,7 @@ export default function FundAnalysis() {
             <Div> </Div>
           </DummyGrid>
           <DateGrid columns={columns}>
-            {_dates}
+            {dates}
           </DateGrid>
         </DateGridContainer>
         <FinancialStatementGridContainer>
