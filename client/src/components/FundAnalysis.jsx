@@ -8,47 +8,60 @@ import ToolTip from "./ToolTip";
 import Modal from "./Modal";
 import * as colors from "../constants/colors";
 
-const CompanyListConatiner = styled.div`
+const FundAnalysisConatiner = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
   flex: 1;
 `;
 
-const CompanyGridContainer = styled.div`
+const FinancialStatementGridContainer = styled.div`
+  display: flex;
   flex: 1;
   overflow: scroll;
 `;
 
-// const CompanyGrid = styled.div`
-//   flex: 1;
-//   overflow: scroll;
-// `;
+// background-color: ${(props) => {
+//   if (props["data-company-code"] === props.clickedCoCode) {
+//     return colors.PRIMARY_GRAY;
+//   }
+// }};
+// color: ${(props) => {
+//   if (props["data-company-code"] === props.clickedCoCode) {
+//     return colors.TERNARY_GRAY;
+//   }
+// }};
 
-const CompanyGrid = styled.div`
+const NumberGrid = styled.div`
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: repeat(6, minmax(6rem, 1fr));
-  grid-template-rows: repeat(54, minmax(5rem, 1fr));
+  grid-template-columns: repeat(1, minmax(6rem, 1fr));
+  grid-template-rows: ${(props) => {
+    return `repeat(${props.rows}, minmax(5rem, 1fr))`;
+  }
+};
   justify-items: center;
   align-items: center;
-  background-color: ${(props) => {
-    if (props["data-company-code"] === props.clickedCoCode) {
-      return colors.PRIMARY_GRAY;
-    }
-  }};
-  color: ${(props) => {
-    if (props["data-company-code"] === props.clickedCoCode) {
-      return colors.TERNARY_GRAY;
-    }
-  }};
   cursor: pointer;
 `;
 
-const HeaderGrid = styled.div`
+const ItemGrid = styled(NumberGrid)`
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(1, minmax(6rem, 1fr));
+  grid-template-rows: ${(props) => {
+    return `repeat(${props.rows}, minmax(5rem, 1fr))`;
+  }
+};
+`;
+
+const DateGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, minmax(6rem, 1fr));
-  grid-template-rows: repeat(54, minmax(6rem, 1fr));
+  grid-template-rows: ${(props) => {
+    return `repeat(${props.rows}, minmax(5rem, 1fr))`;
+  }
+};
   justify-items: center;
   align-items: center;
   height: 5rem;
@@ -60,7 +73,7 @@ const HeaderGrid = styled.div`
 const Div = styled.div`
 `;
 
-export default function CompanyList() {
+export default function FundAnalysis() {
   const dispatch = useDispatch();
 
   const fundamentalAnalysis = useSelector((state) => {
@@ -94,32 +107,28 @@ export default function CompanyList() {
 
   return (
     <>
-      <CompanyListConatiner>
-        <HeaderGrid>
+      <FundAnalysisConatiner>
+        <DateGrid>
           <Div>N/A</Div>
           <Div>2019.12.31</Div>
           <Div>2019.12.31</Div>
           <Div>2019.12.31</Div>
           <Div>2019.12.31</Div>
           <Div>2020.12.31</Div>
-        </HeaderGrid>
-        <CompanyGridContainer>
-          <CompanyGrid>
+        </DateGrid>
+        <FinancialStatementGridContainer>
+          <ItemGrid rows={54}>
+            {coInfos}
+          </ItemGrid>
+          <NumberGrid rows={54}>
             {coInfos}
             {coInfos}
             {coInfos}
             {coInfos}
             {coInfos}
-            {coInfos}
-          </CompanyGrid>
-        </CompanyGridContainer>
-        {/* <ToolTip /> */}
-      </CompanyListConatiner>
-      {isModalVisible && (
-        <Modal>
-          <ToolTip />
-        </Modal>
-      )}
+          </NumberGrid>
+        </FinancialStatementGridContainer>
+      </FundAnalysisConatiner>
     </>
   );
 }
