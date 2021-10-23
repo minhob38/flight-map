@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import * as stockAction from "../reducers/stockReducer";
-import * as appAction from "../reducers/appReducer";
-import ToolTip from "./ToolTip";
-import Modal from "./Modal";
 import * as colors from "../constants/colors";
 
 const FundAnalysisConatiner = styled.div`
@@ -25,22 +21,16 @@ const DateGridContainer = styled.div`
   display: flex;
   width: 100%;
 `;
-// background-color: ${(props) => {
-//   if (props["data-company-code"] === props.clickedCoCode) {
-//     return colors.PRIMARY_GRAY;
-//   }
-// }};
-// color: ${(props) => {
-//   if (props["data-company-code"] === props.clickedCoCode) {
-//     return colors.TERNARY_GRAY;
-//   }
-// }};
 
 const NumberGrid = styled.div`
-  flex:5;
+  flex:${(props) => {
+    return props.columns;
+  }};
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: repeat(5, minmax(10rem, 1fr));
+  grid-template-columns: ${(props) => {
+    return `repeat(${props.columns}, minmax(10rem, 1fr))`;
+  }};
   grid-template-rows: ${(props) => {
     return `repeat(${props.rows}, minmax(5rem, 1fr))`;
   }
@@ -60,9 +50,11 @@ const ItemGrid = styled(NumberGrid)`
 `;
 
 const DateGrid = styled.div`
-  flex:5;
+  flex:3;
   display: grid;
-  grid-template-columns: repeat(5, minmax(10rem, 1fr));
+  grid-template-columns: ${(props) => {
+    return `repeat(${props.columns}, minmax(10rem, 1fr))`;
+  }};
   justify-items: center;
   align-items: center;
   height: 5rem;
@@ -80,32 +72,34 @@ const Div = styled.div`
 `;
 
 export default function FundAnalysis() {
-  // const dispatch = useDispatch();
-
   const fundamentalAnalysis = useSelector((state) => {
     return state.stock.fundamentalAnalysis;
   });
-  // const isModalVisible = useSelector((state) => {
-  //   return state.app.isModalVisible;
-  // });
-
-  // const clickedCompanyCode = useSelector((state) => {
-  //   return state.stock.clickedCompanyCode;
-  // });
-
-  // const handleCompanyClick = (ev) => {
-  //   dispatch(stockAction.koreaCompanyClick(ev.currentTarget.dataset.companyCode));
-  //   dispatch(appAction.enableModal());
-  // };
 
   const items = fundamentalAnalysis["item"]?.map((item) => {
     return <Div key={uuidv4()}>{item}</Div>;
   });
 
-  const numbers = fundamentalAnalysis["20201231"]?.map((item) => {
-    return <Div key={uuidv4()}>{item}</Div>;
+  let numbers = [];
+  let dates = [];
+
+  const columns = Object.keys(fundamentalAnalysis).length - 1;
+  const rows = fundamentalAnalysis["item"].length;
+
+  for (const key in fundamentalAnalysis) {
+    if (/\d{8}/.test(key)) {
+      const number = fundamentalAnalysis[key]?.map((item) => {
+        return <Div key={uuidv4()}>{item}</Div>;
+      });
+
+      numbers = [...numbers, number];
+      dates = [...dates, key];
+    }
+  }
+
+  const _dates = dates.map((date) => {
+    return <Div key={uuidv4()}>{date}</Div>;
   });
-console.log(fundamentalAnalysis)
 
   return (
     <>
@@ -114,23 +108,15 @@ console.log(fundamentalAnalysis)
           <DummyGrid>
             <Div> </Div>
           </DummyGrid>
-          <DateGrid>
-            <Div>2019.12.31</Div>
-            <Div>2019.12.31</Div>
-            <Div>2019.12.31</Div>
-            <Div>2019.12.31</Div>
-            <Div>2020.12.31</Div>
+          <DateGrid columns={columns}>
+            {_dates}
           </DateGrid>
         </DateGridContainer>
         <FinancialStatementGridContainer>
-          <ItemGrid rows={54}>
+          <ItemGrid rows={rows}>
             {items}
           </ItemGrid>
-          <NumberGrid rows={54}>
-            {numbers}
-            {numbers}
-            {numbers}
-            {numbers}
+          <NumberGrid columns={columns} rows={rows}>
             {numbers}
           </NumberGrid>
         </FinancialStatementGridContainer>
