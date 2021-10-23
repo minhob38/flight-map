@@ -21,6 +21,10 @@ const FinancialStatementGridContainer = styled.div`
   overflow: scroll;
 `;
 
+const DateGridContainer = styled.div`
+  display: flex;
+  width: 100%;
+`;
 // background-color: ${(props) => {
 //   if (props["data-company-code"] === props.clickedCoCode) {
 //     return colors.PRIMARY_GRAY;
@@ -33,22 +37,22 @@ const FinancialStatementGridContainer = styled.div`
 // }};
 
 const NumberGrid = styled.div`
+  flex:5;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: repeat(1, minmax(6rem, 1fr));
+  grid-template-columns: repeat(5, minmax(10rem, 1fr));
   grid-template-rows: ${(props) => {
     return `repeat(${props.rows}, minmax(5rem, 1fr))`;
   }
 };
   justify-items: center;
   align-items: center;
-  cursor: pointer;
+  color: ${colors.PRIMARY_GRAY};
 `;
 
 const ItemGrid = styled(NumberGrid)`
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: repeat(1, minmax(6rem, 1fr));
+  flex:1;
+  grid-template-columns: minmax(10rem, 1fr);
   grid-template-rows: ${(props) => {
     return `repeat(${props.rows}, minmax(5rem, 1fr))`;
   }
@@ -56,12 +60,9 @@ const ItemGrid = styled(NumberGrid)`
 `;
 
 const DateGrid = styled.div`
+  flex:5;
   display: grid;
-  grid-template-columns: repeat(6, minmax(6rem, 1fr));
-  grid-template-rows: ${(props) => {
-    return `repeat(${props.rows}, minmax(5rem, 1fr))`;
-  }
-};
+  grid-template-columns: repeat(5, minmax(10rem, 1fr));
   justify-items: center;
   align-items: center;
   height: 5rem;
@@ -70,62 +71,67 @@ const DateGrid = styled.div`
   color: ${colors.PRIMARY_GRAY};
 `;
 
+const DummyGrid = styled(DateGrid)`
+  flex:1;
+  grid-template-columns: minmax(10rem, 1fr);
+`;
+
 const Div = styled.div`
 `;
 
 export default function FundAnalysis() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const fundamentalAnalysis = useSelector((state) => {
     return state.stock.fundamentalAnalysis;
   });
-  const isModalVisible = useSelector((state) => {
-    return state.app.isModalVisible;
+  // const isModalVisible = useSelector((state) => {
+  //   return state.app.isModalVisible;
+  // });
+
+  // const clickedCompanyCode = useSelector((state) => {
+  //   return state.stock.clickedCompanyCode;
+  // });
+
+  // const handleCompanyClick = (ev) => {
+  //   dispatch(stockAction.koreaCompanyClick(ev.currentTarget.dataset.companyCode));
+  //   dispatch(appAction.enableModal());
+  // };
+
+  const items = fundamentalAnalysis["item"]?.map((item) => {
+    return <Div key={uuidv4()}>{item}</Div>;
   });
 
-  const clickedCompanyCode = useSelector((state) => {
-    return state.stock.clickedCompanyCode;
+  const numbers = fundamentalAnalysis["20201231"]?.map((item) => {
+    return <Div key={uuidv4()}>{item}</Div>;
   });
-
-  const handleCompanyClick = (ev) => {
-    dispatch(stockAction.koreaCompanyClick(ev.currentTarget.dataset.companyCode));
-    dispatch(appAction.enableModal());
-  };
-
-  const coInfos = fundamentalAnalysis["item"]?.map((coinfo) => {
-    return (
-      // <CompanyGrid
-      //   key={uuidv4()}
-      //   data-company-code={coinfo?.["co_code"]}
-      //   onClick={handleCompanyClick}
-      //   clickedCoCode={clickedCompanyCode}
-      // >
-        <Div>{coinfo}</Div>
-      // </CompanyGrid>
-    );
-  });
+console.log(fundamentalAnalysis)
 
   return (
     <>
       <FundAnalysisConatiner>
-        <DateGrid>
-          <Div>N/A</Div>
-          <Div>2019.12.31</Div>
-          <Div>2019.12.31</Div>
-          <Div>2019.12.31</Div>
-          <Div>2019.12.31</Div>
-          <Div>2020.12.31</Div>
-        </DateGrid>
+        <DateGridContainer>
+          <DummyGrid>
+            <Div> </Div>
+          </DummyGrid>
+          <DateGrid>
+            <Div>2019.12.31</Div>
+            <Div>2019.12.31</Div>
+            <Div>2019.12.31</Div>
+            <Div>2019.12.31</Div>
+            <Div>2020.12.31</Div>
+          </DateGrid>
+        </DateGridContainer>
         <FinancialStatementGridContainer>
           <ItemGrid rows={54}>
-            {coInfos}
+            {items}
           </ItemGrid>
           <NumberGrid rows={54}>
-            {coInfos}
-            {coInfos}
-            {coInfos}
-            {coInfos}
-            {coInfos}
+            {numbers}
+            {numbers}
+            {numbers}
+            {numbers}
+            {numbers}
           </NumberGrid>
         </FinancialStatementGridContainer>
       </FundAnalysisConatiner>
