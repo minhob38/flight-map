@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import * as colors from "../constants/colors";
-import generateFinancialStatementTableItem from "./helpers/generateFinancialStatementTableItem";
+import generateFinancialStatementTableItem from "../helpers/generateFinancialStatementTableItem";
 console.log(generateFinancialStatementTableItem)
 const FundAnalysisConatiner = styled.div`
   display: flex;
@@ -73,7 +73,6 @@ const Div = styled.div`
 `;
 
 export default function FundAnalysis() {
-  const ITEM_LIST = ["유동자산", "재고자산", "비유동자산", "매출채권및기타채권"];
   const fundamentalAnalysis = useSelector((state) => {
     return state.stock.fundamentalAnalysis;
   });

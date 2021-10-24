@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import convertNumberToText from "../utils/convertNumberToText";
 
 const Div = styled.div``;
 
@@ -18,7 +19,8 @@ const generateFinancialStatementTableItem = (fundamentalAnalysis) => {
   const show_idxs = [];
   let numbers = [];
   let dates = [];
-  console.log(fundamentalAnalysis["item"]);
+  // console.log(fundamentalAnalysis["item"]);
+
   const items = fundamentalAnalysis["item"]?.map((item, idx) => {
     if (!ITEM_LIST.includes(item)) {
       return;
@@ -35,10 +37,10 @@ const generateFinancialStatementTableItem = (fundamentalAnalysis) => {
           return;
         }
 
-        return <Div key={uuidv4()}>{item}</Div>;
+        return <Div key={uuidv4()}>{convertNumberToText(item)}</Div>;
       });
 
-      numbers = [...numbers, number];
+      numbers = [...numbers, ...number];
       dates = [...dates, key];
     }
   }
