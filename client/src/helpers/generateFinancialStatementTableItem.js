@@ -19,53 +19,29 @@ const generateFinancialStatementTableItem = (fundamentalAnalysis) => {
   const show_idxs = [];
   let numbers = [];
   let dates = [];
-  // console.log(fundamentalAnalysis["item"]);
 
-  const items = fundamentalAnalysis["item"]?.map((item, idx) => {
-    if (!ITEM_LIST.includes(item)) {
+  const items = ITEM_LIST.map((item) => {
+    const indexAtRawData = fundamentalAnalysis["item"].indexOf(item);
+
+    if (indexAtRawData === -1) {
       return;
     }
 
-    show_idxs.push(idx);
+    show_idxs.push(indexAtRawData);
     return <Div key={uuidv4()}>{item}</Div>;
   });
 
   for (const key in fundamentalAnalysis) {
     if (/\d{8}/.test(key)) {
-      const number = fundamentalAnalysis[key]?.map((item, idx) => {
-        if (!show_idxs.includes(idx)) {
-          return;
-        }
-
-        return <Div key={uuidv4()}>{convertNumberToText(item)}</Div>;
+      const number = show_idxs.map((item) => {
+        const numberAtRawData = fundamentalAnalysis[key][item];
+        return <Div key={uuidv4()}>{convertNumberToText(numberAtRawData)}</Div>
       });
 
       numbers = [...numbers, ...number];
       dates = [...dates, key];
     }
   }
-
-  // const number = [];
-
-  // for (const key in fundamentalAnalysis) {
-  //   if (/\d{8}/.test(key)) {
-  //     fundamentalAnalysis[key]?.forEach((item, idx) => {
-  //       if (show_idxs.includes(idx)) {
-  //         number.push(
-  //           <Div key={uuidv4()}>
-  //             {convertNumberToText(fundamentalAnalysis[key][idx])}
-  //           </Div>
-  //         );
-  //         return;
-  //       }
-
-  //       // return <Div key={uuidv4()}>{convertNumberToText(item)}</Div>;
-  //     });
-
-  //     numbers = [...numbers, ...number];
-  //     dates = [...dates, key];
-  //   }
-  // }
 
   const _dates = dates.map((date) => <Div key={uuidv4()}>{date}</Div>);
 
