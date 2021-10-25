@@ -45,6 +45,28 @@ const generateFinancialStatementTableItem = (fundamentalAnalysis) => {
     }
   }
 
+  // const number = [];
+
+  // for (const key in fundamentalAnalysis) {
+  //   if (/\d{8}/.test(key)) {
+  //     fundamentalAnalysis[key]?.forEach((item, idx) => {
+  //       if (show_idxs.includes(idx)) {
+  //         number.push(
+  //           <Div key={uuidv4()}>
+  //             {convertNumberToText(fundamentalAnalysis[key][idx])}
+  //           </Div>
+  //         );
+  //         return;
+  //       }
+
+  //       // return <Div key={uuidv4()}>{convertNumberToText(item)}</Div>;
+  //     });
+
+  //     numbers = [...numbers, ...number];
+  //     dates = [...dates, key];
+  //   }
+  // }
+
   const _dates = dates.map((date) => <Div key={uuidv4()}>{date}</Div>);
 
   const filterItems = items?.filter((item) => item);

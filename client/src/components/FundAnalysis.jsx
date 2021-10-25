@@ -4,23 +4,30 @@ import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import * as colors from "../constants/colors";
 import generateFinancialStatementTableItem from "../helpers/generateFinancialStatementTableItem";
-console.log(generateFinancialStatementTableItem)
+
 const FundAnalysisConatiner = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   height: 100%;
-  flex: 1;
 `;
 
-const FinancialStatementGridContainer = styled.div`
-  display: flex;
-  flex: 1;
-  overflow: scroll;
+const FinancialStatementContainer = styled.div`
+  width: 60rem;
+  box-sizing: border-box;
+  border-bottom: 1px solid ${colors.TERNARY_GRAY};
+  border-left: 1px solid ${colors.TERNARY_GRAY};
+  border-right: 1px solid ${colors.TERNARY_GRAY};
 `;
 
 const DateGridContainer = styled.div`
   display: flex;
-  width: 100%;
+`;
+
+const FinancialStatementGridContainer = styled(DateGridContainer)`
+  overflow: scroll;
 `;
 
 const NumberGrid = styled.div`
@@ -34,8 +41,7 @@ const NumberGrid = styled.div`
   }};
   grid-template-rows: ${(props) => {
     return `repeat(${props.rows}, minmax(5rem, 1fr))`;
-  }
-};
+  }};
   justify-items: center;
   align-items: center;
   color: ${colors.PRIMARY_GRAY};
@@ -46,8 +52,8 @@ const ItemGrid = styled(NumberGrid)`
   grid-template-columns: minmax(10rem, 1fr);
   grid-template-rows: ${(props) => {
     return `repeat(${props.rows}, minmax(5rem, 1fr))`;
-  }
-};
+  }};
+  font-weight: 900;
 `;
 
 const DateGrid = styled.div`
@@ -83,22 +89,24 @@ export default function FundAnalysis() {
   return (
     <>
       <FundAnalysisConatiner>
-        <DateGridContainer>
-          <DummyGrid>
-            <Div> </Div>
-          </DummyGrid>
-          <DateGrid columns={columns}>
-            {dates}
-          </DateGrid>
-        </DateGridContainer>
-        <FinancialStatementGridContainer>
-          <ItemGrid rows={rows}>
-            {items}
-          </ItemGrid>
-          <NumberGrid columns={columns} rows={rows}>
-            {numbers}
-          </NumberGrid>
-        </FinancialStatementGridContainer>
+        <FinancialStatementContainer>
+          <DateGridContainer>
+            <DummyGrid>
+              <Div>재무상태표</Div>
+            </DummyGrid>
+            <DateGrid columns={columns}>
+              {dates}
+            </DateGrid>
+          </DateGridContainer>
+          <FinancialStatementGridContainer>
+            <ItemGrid rows={rows}>
+              {items}
+            </ItemGrid>
+            <NumberGrid columns={columns} rows={rows}>
+              {numbers}
+            </NumberGrid>
+          </FinancialStatementGridContainer>
+        </FinancialStatementContainer>
       </FundAnalysisConatiner>
     </>
   );
