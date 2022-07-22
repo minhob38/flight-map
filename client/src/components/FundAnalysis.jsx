@@ -107,6 +107,24 @@ export default function FundAnalysis() {
             </NumberGrid>
           </FinancialStatementGridContainer>
         </FinancialStatementContainer>
+        <FinancialStatementContainer>
+          <DateGridContainer>
+            <DummyGrid>
+              <Div>재무상태표</Div>
+            </DummyGrid>
+            <DateGrid columns={columns}>
+              {dates}
+            </DateGrid>
+          </DateGridContainer>
+          <FinancialStatementGridContainer>
+            <ItemGrid rows={rows}>
+              {items}
+            </ItemGrid>
+            <NumberGrid columns={columns} rows={rows}>
+              {numbers}
+            </NumberGrid>
+          </FinancialStatementGridContainer>
+        </FinancialStatementContainer>
       </FundAnalysisConatiner>
     </>
   );

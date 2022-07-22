@@ -66,7 +66,11 @@ export function* stockSaga() {
 const initialState = {
   koreaKospiCoInfos: [],
   clickedCompanyCode: "",
-  fundamentalAnalysis: {},
+  fundamentalAnalysis: {
+    bs: {},
+    cis: {},
+    cf: {},
+  },
 };
 
 const stockReducer = handleActions(
@@ -81,16 +85,40 @@ const stockReducer = handleActions(
         draft.clickedCompanyCode = action.payload;
       });
     },
+    // [FUNDAMENTAL_ANALYSIS_CLICK]: (state, action) => {
+    //   return produce(state, (draft) => {
+    //     const fundamentalAnalysis = action.payload;
+    //     const _fundamentalAnalysis = {};
+
+    //     for (const key in fundamentalAnalysis) {
+    //       _fundamentalAnalysis[key] = Object.values(fundamentalAnalysis[key]);
+    //     }
+
+    //     draft.fundamentalAnalysis = _fundamentalAnalysis;
+    //   });
+    // },
     [FUNDAMENTAL_ANALYSIS_CLICK]: (state, action) => {
       return produce(state, (draft) => {
-        const fundamentalAnalysis = action.payload;
+        console.log("!!!");
+        console.log(action);
+        const bs = action.payload.bs;
+        console.log("???");
+
+        const cis = action.payload.cis;
+        const cf = action.payload.cf;
+
         const _fundamentalAnalysis = {};
 
-        for (const key in fundamentalAnalysis) {
-          _fundamentalAnalysis[key] = Object.values(fundamentalAnalysis[key]);
+        for (const key in bs) {
+          draft.fundamentalAnalysis.bs[key] = Object.values(bs[key]);
         }
 
-        draft.fundamentalAnalysis = _fundamentalAnalysis;
+        console.log(draft.fundamentalAnalysis);
+
+        // draft.fundamentalAnalysis = _fundamentalAnalysis;
+        // draft.fundamentalAnalysis.bs = {
+        //   c
+        // }
       });
     },
   },

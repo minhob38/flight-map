@@ -14,14 +14,13 @@ const generateFinancialStatementTableItem = (fundamentalAnalysis) => {
     "비유동부채",
     "자본총계",
     "매출채권",
-    // "매출채권및기타채권",
   ];
   const show_idxs = [];
   let numbers = [];
   let dates = [];
 
   const items = ITEM_LIST.map((item) => {
-    const indexAtRawData = fundamentalAnalysis["item"].indexOf(item);
+    const indexAtRawData = fundamentalAnalysis["item"]?.indexOf(item);
 
     if (indexAtRawData === -1) {
       return;
@@ -35,7 +34,7 @@ const generateFinancialStatementTableItem = (fundamentalAnalysis) => {
     if (/\d{8}/.test(key)) {
       const number = show_idxs.map((item) => {
         const numberAtRawData = fundamentalAnalysis[key][item];
-        return <Div key={uuidv4()}>{convertNumberToText(numberAtRawData)}</Div>
+        return <Div key={uuidv4()}>{convertNumberToText(numberAtRawData)}</Div>;
       });
 
       numbers = [...numbers, ...number];
